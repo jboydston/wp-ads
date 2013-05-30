@@ -8,8 +8,8 @@
    Author URI: http://joeboydston.com
    License: GPL2
    */
-?>
-<?php
+
+	// Kick off
 	add_action( 'init', 'wpads_register_post_type' );
 
 	function wpads_register_post_type() {
@@ -33,12 +33,13 @@
 		'description'   => 'Holds our Ads and ad specific data',
 		'public'        => true,
 		'menu_position' => 5,
-		'supports'      => array( 'custom-fields', 'thumbnail' ),
+		'supports'      => array( 'custom-fields', 'author', 'thumbnail' ),
 //		'taxonomies' 	=> array('post_tag', 'category'),
 		'has_archive'   => true,
 	);
 	register_post_type( 'ad', $args );	
 	}
+
 
 	/* Run our meta box setup function on the post editor screen. */
 	add_action( 'load-post.php', 'wpads_post_meta_boxes_setup' );
@@ -58,7 +59,7 @@
 
 		add_meta_box(
 			'wpads-post-class',			// Unique ID
-			esc_html__( 'Graphic Artist', 'example' ),		// Title
+			esc_html__( 'Ad Details', 'example' ),		// Title
 			'wpads_post_class_meta_box',		// Callback function
 			'ad',					// Admin page (or post type)
 			'normal',					// Context
@@ -72,20 +73,67 @@
 	function wpads_post_class_meta_box( $object, $box ) {
 		wp_nonce_field( basename( __FILE__ ), 'wpads_post_class_nonce' );?>
 		<p>
-			<label for="wpads-post-class"><?php _e( "Some descriptive text?", 'artist-lable' ); ?></label>
+			<label for="wpads-post-class"><?php _e( "Sales Rep", 'salesrep-lable' ); ?></label>
+			<br />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_the_author() ); ?>" size="30" />
+		</p>
+		<p>
+			<label for="wpads-post-class"><?php _e( "Graphic Artist", 'artist-lable' ); ?></label>
 			<br />
 			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-artist', true ) ); ?>" size="30" />
 		</p>
 		<p>
-			<label for="wpads-post-class"><?php _e( "Some descriptive text?", 'artist-lable' ); ?></label>
+			<label for="wpads-post-class"><?php _e( "Business Name", 'bizname-lable' ); ?></label>
 			<br />
 			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-biz-name', true ) ); ?>" size="30" />
 		</p>
 		<p>
-			<label for="wpads-post-class"><?php _e( "Some descriptive text?", 'artist-lable' ); ?></label>
+			<label for="wpads-post-class"><?php _e( "Height", 'height-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-biz-name', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-height', true ) ); ?>" size="30" />
+		</p>
+			<label for="wpads-post-class"><?php _e( "Width", 'width-lable' ); ?></label>
+			<br />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-width', true ) ); ?>" size="30" />
+		</p>
+			<label for="wpads-post-class"><?php _e( "Page", 'page-lable' ); ?></label>
+			<br />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-page', true ) ); ?>" size="30" />
+		</p>
+			<label for="wpads-post-class"><?php _e( "Section", 'section-lable' ); ?></label>
+			<br />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-section', true ) ); ?>" size="30" />
+		</p>
+			<label for="wpads-post-class"><?php _e( "URL", 'url-lable' ); ?></label>
+			<br />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-url', true ) ); ?>" size="30" />
+		</p>
+			<label for="wpads-post-class"><?php _e( "Phone Number", 'phone-lable' ); ?></label>
+			<br />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-phone', true ) ); ?>" size="30" />
 		</p>
 	<?php
+	} //end display metabox
+
+
+	//save data functions
+	add_action( 'save_post', 'wpads_save' );
+	function wpads_save( $post_id ) {
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+		return;
+
+		if ( !wp_verify_nonce( $_POST['wpads_post_class_nonce'], plugin_basename( __FILE__ ) ) )
+		return;
+
+		if ( 'page' == $_POST['ads'] ) {
+			if ( !current_user_can( 'edit_page', $post_id ) )
+			return;
+		} else {
+			if ( !current_user_can( 'edit_post', $post_id ) )
+			return;
+		}
+		$artist = $_POST['wpads-artist'];
+		update_post_meta( $post_id, 'wpads-artist', $artist );
 	}
 ?>
