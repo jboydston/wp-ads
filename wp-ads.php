@@ -14,30 +14,30 @@
 
 	function wpads_register_post_type() {
 	$labels = array(
-		'name'               => _x( 'Ads', 'post type general name' ),
-		'singular_name'      => _x( 'Ad', 'post type singular name' ),
-		'add_new'            => _x( 'Add New', 'ad' ),
-		'add_new_item'       => __( 'Add New Ad' ),
-		'edit_item'          => __( 'Edit Ad' ),
-		'new_item'           => __( 'New Ad' ),
-		'all_items'          => __( 'All Ads' ),
-		'view_item'          => __( 'View Ad' ),
-		'search_items'       => __( 'Search Ads' ),
-		'not_found'          => __( 'No Ads found' ),
-		'not_found_in_trash' => __( 'No Ads found in the Trash' ), 
+		'name'               => _x( 'Advertisements', 'post type general name' ),
+		'singular_name'      => _x( 'Advertisement', 'post type singular name' ),
+		'add_new'            => _x( 'Add New', 'advertisement' ),
+		'add_new_item'       => __( 'Add New Advertisement' ),
+		'edit_item'          => __( 'Edit Advertisement' ),
+		'new_item'           => __( 'New Advertisement' ),
+		'all_items'          => __( 'All Advertisements' ),
+		'view_item'          => __( 'View Advertisement' ),
+		'search_items'       => __( 'Search Advertisements' ),
+		'not_found'          => __( 'No Advertisements found' ),
+		'not_found_in_trash' => __( 'No Advertisements found in the Trash' ), 
 		'parent_item_colon'  => '',
-		'menu_name'          => 'Ads',
+		'menu_name'          => 'Advertisements',
 	);
 	$args = array(
 		'labels'        => $labels,
-		'description'   => 'Holds our Ads and ad specific data',
+		'description'   => 'Holds our Advertisements and ad specific data',
 		'public'        => true,
 		'menu_position' => 5,
-		'supports'      => array( 'custom-fields', 'author', 'thumbnail' ),
+		'supports'      => array( 'title', 'custom-fields', 'author', 'thumbnail' ),
 //		'taxonomies' 	=> array('post_tag', 'category'),
 		'has_archive'   => true,
 	);
-	register_post_type( 'ad', $args );	
+	register_post_type( 'advertisements', $args );	
 	}
 
 
@@ -59,9 +59,9 @@
 
 		add_meta_box(
 			'wpads-post-class',			// Unique ID
-			esc_html__( 'Ad Details', 'example' ),		// Title
+			esc_html__( 'Ad Details' ),		// Title
 			'wpads_post_class_meta_box',		// Callback function
-			'ad',					// Admin page (or post type)
+			'advertisements',					// Admin page (or post type)
 			'normal',					// Context
 			'high'					// Priority
 		);		
@@ -70,7 +70,11 @@
 
 
 	/* Display the post meta box. */
-	function wpads_post_class_meta_box( $object, $box ) {?>
+	function wpads_post_class_meta_box( $post ) {
+
+	  // Use nonce for verification
+	  wp_nonce_field( plugin_basename( __FILE__ ), 'wpads_noncename' ); ?>
+
 		<p>
 			<label for="wpads-post-class"><?php _e( "Sales Rep", 'salesrep-lable' ); ?></label>
 			<br />
@@ -79,40 +83,72 @@
 		<p>
 			<label for="wpads-post-class"><?php _e( "Graphic Artist", 'artist-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-artist', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $post->ID, 'wpads-artist', true ) ); ?>" size="30" />
 		</p>
 		<p>
 			<label for="wpads-post-class"><?php _e( "Business Name", 'bizname-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-biz-name', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $post->ID, 'wpads-biz-name', true ) ); ?>" size="30" />
 		</p>
 		<p>
 			<label for="wpads-post-class"><?php _e( "Height", 'height-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-height', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $post->ID, 'wpads-height', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "Width", 'width-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-width', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $post->ID, 'wpads-width', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "Page", 'page-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-page', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $post->ID, 'wpads-page', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "Section", 'section-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-section', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $post->ID, 'wpads-section', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "URL", 'url-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-url', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $post->ID, 'wpads-url', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "Phone Number", 'phone-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'wpads-phone', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $post->ID, 'wpads-phone', true ) ); ?>" size="30" />
 		</p>
 	<?php
 	} //end display metabox
 
+	
+	/* When the post is saved, saves our custom data */
+	function myplugin_save_postdata( $post_id ) {
 
+	  // First we need to check if the current user is authorised to do this action. 
+	  if ( 'page' == $_POST['post_type'] ) {
+	    if ( ! current_user_can( 'edit_page', $post_id ) )
+	        return;
+	  } else {
+	    if ( ! current_user_can( 'edit_post', $post_id ) )
+	        return;
+	  }
+
+	  // Secondly we need to check if the user intended to change this value.
+	  if ( ! isset( $_POST['wpads_noncename'] ) || ! wp_verify_nonce( $_POST['wpads_noncename'], plugin_basename( __FILE__ ) ) )
+	      return;
+
+	  // Thirdly we can save the value to the database
+
+	  //if saving in a custom table, get post_ID
+	  $post_ID = $_POST['post_ID'];
+	  //sanitize user input
+	  $mydata = sanitize_text_field( $_POST['wpads-artist'] );
+
+	  // Do something with $mydata 
+	  // either using 
+	  add_post_meta($post_ID, 'wpads-artist', $mydata, true) or
+	    update_post_meta($post_ID, 'wpads-artist', $mydata);
+	  // or a custom table (see Further Reading section below)
+	}
+	
+	
+	
 ?>
