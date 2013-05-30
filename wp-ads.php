@@ -64,14 +64,13 @@
 			'ad',					// Admin page (or post type)
 			'normal',					// Context
 			'high'					// Priority
-		);
-	}
+		);		
+	} //end wpads_add_post_meta_boxes
 
 
 
 	/* Display the post meta box. */
-	function wpads_post_class_meta_box( $object, $box ) {
-		wp_nonce_field( basename( __FILE__ ), 'wpads_post_class_nonce' );?>
+	function wpads_post_class_meta_box( $object, $box ) {?>
 		<p>
 			<label for="wpads-post-class"><?php _e( "Sales Rep", 'salesrep-lable' ); ?></label>
 			<br />
@@ -116,24 +115,4 @@
 	} //end display metabox
 
 
-	//save data functions
-	add_action( 'save_post', 'wpads_save' );
-	function wpads_save( $post_id ) {
-
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
-		return;
-
-		if ( !wp_verify_nonce( $_POST['wpads_post_class_nonce'], plugin_basename( __FILE__ ) ) )
-		return;
-
-		if ( 'page' == $_POST['ads'] ) {
-			if ( !current_user_can( 'edit_page', $post_id ) )
-			return;
-		} else {
-			if ( !current_user_can( 'edit_post', $post_id ) )
-			return;
-		}
-		$artist = $_POST['wpads-artist'];
-		update_post_meta( $post_id, 'wpads-artist', $artist );
-	}
 ?>
