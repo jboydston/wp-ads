@@ -116,7 +116,7 @@
 			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-phone', true ) ); ?>" size="30" />
 		</p>
 	<?php
-	} //end display metabox
+	} //end display metabox  (this is what I changed, yo)
 
 	
 	add_action( 'save_post', 'wpads_save');
