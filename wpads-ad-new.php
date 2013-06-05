@@ -68,7 +68,7 @@
 		<p>
 			<label for="wpads-post-class"><?php _e( "Sales Rep", 'salesrep-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_the_author() ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-salesrep" id="wpads-salesrep-id" value="<?php echo esc_attr( get_the_author() ); ?>" size="30" />
 		</p>
 		<p>
 			<label for="wpads-post-class"><?php _e( "Graphic Artist", 'artist-lable' ); ?></label>
@@ -78,32 +78,32 @@
 		<p>
 			<label for="wpads-post-class"><?php _e( "Business Name", 'bizname-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-biz-name', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-bizname" id="wpads-bizname-id" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-bizname', true ) ); ?>" size="30" />
 		</p>
 		<p>
 			<label for="wpads-post-class"><?php _e( "Height", 'height-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-height', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-height" id="wpads-height-id" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-height', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "Width", 'width-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-width', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-width" id="wpads-width-id" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-width', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "Page", 'page-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-page', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-page" id="wpads-page-id" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-page', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "Section", 'section-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-section', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-section" id="wpads-section-id" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-section', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "URL", 'url-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-url', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-url" id="wpads-url-id" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-url', true ) ); ?>" size="30" />
 		</p>
 			<label for="wpads-post-class"><?php _e( "Phone Number", 'phone-lable' ); ?></label>
 			<br />
-			<input class="widefat" type="text" name="wpads-post-class" id="wpads-post-class" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-phone', true ) ); ?>" size="30" />
+			<input class="widefat" type="text" name="wpads-phone" id="wpads-phone-id" value="<?php echo esc_attr( get_post_meta( $advertisement->ID, 'wpads-phone', true ) ); ?>" size="30" />
 		</p>
 	<?php
 	} //end display metabox  (this is what I changed, yo)

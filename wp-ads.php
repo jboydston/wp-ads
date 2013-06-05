@@ -9,7 +9,7 @@
    License: GPL2
    */
 
-include wpads-ad-new.php;
-include wpads-view-all.php;
+include 'wpads-ad-new.php';
+include 'wpads-view-all.php';
 
 ?>
