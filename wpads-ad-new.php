@@ -109,7 +109,7 @@
 	} //end display metabox  (this is what I changed, yo)
 
 	
-	add_action( 'save_post', 'wpads_save');
+	add_action( 'save_post', 'wpads_save2');
 	
 	function wpads_save() {
 		//if saving in a custom table, get post_ID
@@ -123,6 +123,22 @@
 		    update_post_meta($post_ID, 'wpads-artist', $mydata);
 		  // or a custom table (see Further Reading section below)
 		}
+	
+		function wpads_save2() {
+			global $custom_meta_fields;  
+		    
+	    // loop through fields and save the data  
+	    foreach ($custom_meta_fields as $field) {  
+	        $old = get_post_meta($post_id, $field['id'], true);  
+	        $new = $_POST[$field['id']];  
+	        if ($new && $new != $old) {  
+	            update_post_meta($post_id, $field['id'], $new);  
+	        } elseif ('' == $new && $old) {  
+	            delete_post_meta($post_id, $field['id'], $old);  
+	        }  
+	    } // end foreach  
+	}
+	
 	
 	
 ?>
