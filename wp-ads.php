@@ -11,5 +11,6 @@
 
 include 'wpads-ad-new.php';
 include 'wpads-view-all.php';
+include 'sprockets.php';
 
 ?>
